@@ -1,12 +1,16 @@
+import UserService from "./service";
+
 export default class User {
 	private readonly id;
 	private username = "";
 	private email = "";
-	
+	private readonly service: UserService;
+
 	constructor(uuid: string, username: string, email: string) {
 		this.id = "";
 		this.username = username;
 		this.email = email;
+		this.service = new UserService(this);
 	}
 
 	public static createUser(uuid: string, username: string, email: string) {
@@ -21,6 +25,14 @@ export default class User {
 		if (!User.validateEmail(email)) throw 1;
 
 		return new User(uuid, username, email);
+	}
+
+	public getTotalFollowers(): number {
+		return this.service.getTotalFollowers();
+	}
+
+	public getTotalFolloweds(): number {
+		return this.service.getTotalFolloweds();
 	}
 
 	public static validateUUID(uuid: string): boolean {

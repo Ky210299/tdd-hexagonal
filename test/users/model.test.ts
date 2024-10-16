@@ -99,6 +99,26 @@ describe("Users functionalities", () => {
 	});
 
 	describe("Follow others users", () => {
-		const user1 = User.createUser(exampleUUID, exampleUsername, exampleEmail);
+		let user1: User;
+		let user2: User;
+		let user3: User;
+		let user4: User;
+		beforeEach(() => {
+			user1 = User.createUser(exampleUUID, exampleUsername, exampleEmail);
+			user2 = User.createUser(
+				"123e4567-e89b-12d3-a456-42665544200a",
+				"Alfonso",
+				"alfonso@email.com",
+			);
+			user3 = User.createUser("123e4567-e89b-12d3-a456-42665544200b", "Pedro", "pedro@email.com");
+			user4 = User.createUser("123e4567-e89b-12d3-a456-42665544200c", "Leo", "leo@email.com");
+		});
+
+		it("A new User dont have any follow", () => {
+			expect(user1.getTotalFollowers()).toEqual(0);
+		});
+		it("An new user do not follow to anyone", () => {
+			expect(user1.getTotalFolloweds()).toEqual(0);
+		});
 	});
 });
