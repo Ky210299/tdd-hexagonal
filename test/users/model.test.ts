@@ -31,5 +31,13 @@ describe("Users functionalities", () => {
 			expect(typeof newUser.getName).toEqual("function");
 			expect(typeof newUser.getEmail).toEqual("function");
 		});
+		
+		it("The instanciated user should have the passed username and email", ()=> {
+			const username = "Robert";
+			const email = "email";
+			const newUser = User.createUser(username, email);
+			expect(newUser.getEmail() === email).toBeTruthy();
+			expect(newUser.getName() === username).toBeTruthy();
+		})
 	});
 });
