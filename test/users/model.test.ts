@@ -8,36 +8,35 @@ describe("Jest should work", () => {
 
 describe("Users functionalities", () => {
 	describe("Create an user", () => {
-		it("User model should have an method for create a user called createUser", () => {
-			expect(typeof User.createUser).toEqual("function");
+		const uuidExample = "123e4567-e89b-12d3-a456-426655440000";
+		it("Should throw an error if not uuid, username or email is passed", () => {
+			expect(() => User.createUser(null, null, null)).toThrow;
 		});
 
-		it("createUser method must receive by parameters username and email", () => {
-			expect(User.createUser.length).toEqual(2);
-		});
-
-		it("Should throw an error if not username or email is passed", () => {
-			expect(() => User.createUser(null, null)).toThrow;
+		it("Should throw an error if not valid uuid is passed", () => {
+			expect(() => User.createUser("1234", "Robert", "example@email.com")).toThrow();
 		});
 
 		it("Should return an user instance", () => {
-			const newUser = User.createUser("Robert", "email");
+			const newUser = User.createUser(uuidExample, "Robert", "example@email.com");
 			expect(newUser instanceof User).toBeTruthy();
 		});
 
-		it("The user instance should have a method called getName and getEmail", () => {
-			const newUser = User.createUser("Robert", "email");
-
-			expect(typeof newUser.getName).toEqual("function");
-			expect(typeof newUser.getEmail).toEqual("function");
-		});
-		
-		it("The instanciated user should have the passed username and email", ()=> {
+		it("The created user should have the passed username and email", () => {
 			const username = "Robert";
-			const email = "email";
-			const newUser = User.createUser(username, email);
+			const email = "example@email.com";
+			const newUser = User.createUser(uuidExample, username, email);
 			expect(newUser.getEmail() === email).toBeTruthy();
 			expect(newUser.getName() === username).toBeTruthy();
-		})
+		});
+
+		// it("The created user must have an UUID", () => {
+		// 	const newUser = User.createUser("id", "Robert", "example@email.com");
+		// 	const uuid1 = "123e4567-e89b-12d3-a456-426655440000";
+		// 	const uuid2 = "8ca0fd81-fd03-438c-8730-c6c4e7ef4aa9const uuid2 ";
+		// 	expect(newUser.getId()).toMatch(
+		// 		/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
+		// 	);
+		// });
 	});
 });
