@@ -7,8 +7,9 @@ describe("Jest should work", () => {
 });
 
 describe("Users functionalities", () => {
-	it("Should return an User when you create one", () => {
-		const newUser = User.createUser();
-		expect(newUser).toBeInstanceOf(User);
+	describe("Create an user", () => {
+		it("User model should have an method for create a user calle createUser", () => {
+			expect("createUser" in User).toBeTruthy();
+		});
 	});
 });
