@@ -2,7 +2,6 @@
 
 ## User features
 
-
 ## You can create an user with an uuid, username,email
 
-
+## You can follow other users
