@@ -34,9 +34,12 @@ export default class User {
 	public getTotalFolloweds(): number {
 		return this.service.getTotalFolloweds();
 	}
-	
-	public getListOfFollowers(): Array<User>{
-		return []
+
+	public getListOfFollowers(): User[] {
+		return [];
+	}
+	public getListOfFolloweds(): User[] {
+		return [];
 	}
 
 	public static validateUUID(uuid: string): boolean {

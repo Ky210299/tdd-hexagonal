@@ -121,10 +121,16 @@ describe("Users functionalities", () => {
 			expect(user1.getTotalFolloweds()).toEqual(0);
 		});
 
-		it("Should retrive the list of followers empty for a new user", () => {
+		it("Should retrive an empty list of followers a new user", () => {
 			const followers = user1.getListOfFollowers();
 			expect(Array.isArray(followers)).toBeTruthy();
 			expect(followers.length).toEqual(0);
+		});
+
+		it("Should retrive an empty list of followeds for a new user", () => {
+			const followeds = user1.getListOfFollowers();
+			expect(Array.isArray(followeds)).toBeTruthy();
+			expect(followeds.length).toEqual(0);
 		});
 
 		// it("An user can follow to others",()=> {
