@@ -3,6 +3,6 @@
 ## User features
 
 
-## You can create an user with an username,full name, email
+## You can create an user with an uuid, username,email
 
 

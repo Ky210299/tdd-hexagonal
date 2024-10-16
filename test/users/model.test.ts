@@ -9,34 +9,90 @@ describe("Jest should work", () => {
 describe("Users functionalities", () => {
 	describe("Create an user", () => {
 		const uuidExample = "123e4567-e89b-12d3-a456-426655440000";
+		const exampleEmail = "example@email.com";
+		const exampleUsername = "Robert";
+
 		it("Should throw an error if not uuid, username or email is passed", () => {
 			expect(() => User.createUser(null, null, null)).toThrow;
+			expect(() => User.createUser("", "", "")).toThrow();
+			expect(() => User.createUser(undefined, undefined, undefined)).toThrow();
 		});
 
 		it("Should throw an error if not valid uuid is passed", () => {
-			expect(() => User.createUser("1234", "Robert", "example@email.com")).toThrow();
+			expect(() => User.createUser("1234", exampleUsername, exampleEmail)).toThrow();
+			expect(() =>
+				User.createUser(1 as unknown as string, exampleUsername, exampleEmail),
+			).toThrow();
+			expect(() =>
+				User.createUser(true as unknown as string, exampleUsername, exampleEmail),
+			).toThrow();
+			expect(() =>
+				User.createUser({} as unknown as string, exampleUsername, exampleEmail),
+			).toThrow();
+		});
+
+		it("Should throw an error if not valid username", () => {
+			expect(() => User.createUser(uuidExample, 1 as unknown as string, exampleEmail)).toThrow();
+			expect(() => User.createUser(uuidExample, true as unknown as string, exampleEmail)).toThrow();
+			expect(() => User.createUser(uuidExample, "a s d f ", exampleEmail)).toThrow();
+			expect(() => User.createUser(uuidExample, "a!@$", exampleEmail)).toThrow();
+			expect(() => User.createUser(uuidExample, {} as unknown as string, exampleEmail)).toThrow();
+		});
+
+		it("Should throw an error if not valid email is passed", () => {
+			expect(() => User.createUser(uuidExample, exampleUsername, 1 as unknown as string)).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, [] as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, {} as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, true as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, "bademail" as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, "bad email" as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, "bademail.com" as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, "@email" as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, "bad@email." as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, "bad@email!.com" as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, "bad.com@email" as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, "bad@@email.com" as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, "bad@email..com" as unknown as string),
+			).toThrow();
+			expect(() =>
+				User.createUser(uuidExample, exampleUsername, "用户@示例.email" as unknown as string),
+			).toThrow();
 		});
 
 		it("Should return an user instance", () => {
-			const newUser = User.createUser(uuidExample, "Robert", "example@email.com");
+			const newUser = User.createUser(uuidExample, exampleUsername, exampleEmail);
 			expect(newUser instanceof User).toBeTruthy();
 		});
 
 		it("The created user should have the passed username and email", () => {
-			const username = "Robert";
-			const email = "example@email.com";
+			const username = exampleUsername;
+			const email = exampleEmail;
 			const newUser = User.createUser(uuidExample, username, email);
 			expect(newUser.getEmail() === email).toBeTruthy();
 			expect(newUser.getName() === username).toBeTruthy();
 		});
-
-		// it("The created user must have an UUID", () => {
-		// 	const newUser = User.createUser("id", "Robert", "example@email.com");
-		// 	const uuid1 = "123e4567-e89b-12d3-a456-426655440000";
-		// 	const uuid2 = "8ca0fd81-fd03-438c-8730-c6c4e7ef4aa9const uuid2 ";
-		// 	expect(newUser.getId()).toMatch(
-		// 		/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
-		// 	);
-		// });
 	});
 });
