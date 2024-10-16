@@ -11,4 +11,9 @@ export default class UserService {
 	public getTotalFolloweds(): number {
 		return 0;
 	}
+
+	public followUser(followed: User): void {
+		return
+		
+	}
 }

@@ -133,8 +133,9 @@ describe("Users functionalities", () => {
 			expect(followeds.length).toEqual(0);
 		});
 
-		// it("An user can follow to others",()=> {
-		// 	user1.startFollowTo(user: User)
+		it("An user can follow to others", () => {
+			user1.follow(user2);
+		});
 
 		// })
 

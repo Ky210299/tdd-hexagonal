@@ -42,6 +42,10 @@ export default class User {
 		return [];
 	}
 
+	public follow(user: User): void {
+		this.service.followUser(user);
+	}
+
 	public static validateUUID(uuid: string): boolean {
 		const RegExpForUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 		return RegExpForUUID.test(uuid);
