@@ -120,5 +120,21 @@ describe("Users functionalities", () => {
 		it("An new user do not follow to anyone", () => {
 			expect(user1.getTotalFolloweds()).toEqual(0);
 		});
+
+		it("Should retrive the list of followers empty for a new user", () => {
+			const followers = user1.getListOfFollowers();
+			expect(Array.isArray(followers)).toBeTruthy();
+			expect(followers.length).toEqual(0);
+		});
+
+		// it("An user can follow to others",()=> {
+		// 	user1.startFollowTo(user: User)
+
+		// })
+
+		// it("An User can follow to other user", () => {
+		// 	user1.startToFollow(user2);
+		// 	expect(user2.getTotalFollowers()).toEqual(1);
+		// });
 	});
 });

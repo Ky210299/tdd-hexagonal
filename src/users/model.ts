@@ -34,6 +34,10 @@ export default class User {
 	public getTotalFolloweds(): number {
 		return this.service.getTotalFolloweds();
 	}
+	
+	public getListOfFollowers(): Array<User>{
+		return []
+	}
 
 	public static validateUUID(uuid: string): boolean {
 		const RegExpForUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
