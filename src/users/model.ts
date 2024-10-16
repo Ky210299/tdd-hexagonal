@@ -43,6 +43,7 @@ export default class User {
 	}
 
 	public follow(user: User): void {
+		if (user.id === this.id) throw 1;
 		this.service.followUser(user);
 	}
 

@@ -133,12 +133,11 @@ describe("Users functionalities", () => {
 			expect(followeds.length).toEqual(0);
 		});
 
-		it("An user can follow to others", () => {
-			user1.follow(user2);
+		it("Should throw an error if an user try to follow to itself", () => {
+			expect(() => user1.follow(user1)).toThrow();
 		});
 
 		// })
-
 		// it("An User can follow to other user", () => {
 		// 	user1.startToFollow(user2);
 		// 	expect(user2.getTotalFollowers()).toEqual(1);
