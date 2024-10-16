@@ -42,9 +42,14 @@ export default class User {
 		return [];
 	}
 
-	public follow(user: User): void {
+	public followTo(user: User): void {
 		if (user.id === this.id) throw 1;
 		this.service.followUser(user);
+	}
+
+	public unfollowTo(user: User): void {
+		if (user.id === this.id) throw 1;
+		this.service.unfollowUser(user);
 	}
 
 	public static validateUUID(uuid: string): boolean {

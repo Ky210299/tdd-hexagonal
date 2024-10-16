@@ -134,7 +134,11 @@ describe("Users functionalities", () => {
 		});
 
 		it("Should throw an error if an user try to follow to itself", () => {
-			expect(() => user1.follow(user1)).toThrow();
+			expect(() => user1.followTo(user1)).toThrow();
+		});
+
+		it("Should throw an error if an user try to unfollow to itself", () => {
+			expect(() => user1.unfollowTo(user1)).toThrow();
 		});
 
 		// })

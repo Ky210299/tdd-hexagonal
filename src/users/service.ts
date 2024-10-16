@@ -16,4 +16,8 @@ export default class UserService {
 		return
 		
 	}
+	
+	public unfollowUser(followed: User): void {
+		return
+	}
 }
