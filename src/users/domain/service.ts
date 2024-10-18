@@ -20,4 +20,8 @@ export default class UserService {
 	public async findAllUsers() {
 		return await this.repository.findAll();
 	}
+
+	public async follow(followerId: string, followedId: string) {
+		if (followerId === followedId) throw "follow it self";
+	}
 }

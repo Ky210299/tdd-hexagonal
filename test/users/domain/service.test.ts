@@ -33,8 +33,11 @@ describe("User Services", () => {
 		expect(users.every((e) => e instanceof User)).toBeTruthy();
 	});
 
-	// it("Should throw an error if try to follow you self", async () => {
-	// 	const user = new User(exampleUUID, exampleUsername, exampleEmail);
-	// 	await userService.followTo(exampleUUID);
-	// });
+	it("Should throw an error if try to follow it self", async () => {
+		try {
+			await userService.follow(exampleUUID, exampleUUID);
+		} catch (err) {
+			expect(err).toMatch("follow it self");
+		}
+	});
 });
