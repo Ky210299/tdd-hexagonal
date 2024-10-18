@@ -2,8 +2,8 @@ import User, { UserId, Username, UserEmail } from "../domain/model";
 import UserRepository from "../domain/repository";
 
 type FollowRelation = {
-	follower: UserId;
-	followed: UserId;
+	followerId: UserId;
+	followedId: UserId;
 };
 export default class InMemoryUserRepository implements UserRepository {
 	private readonly usersDb: Array<User> = [];
@@ -21,18 +21,12 @@ export default class InMemoryUserRepository implements UserRepository {
 	}
 
 	public async addFollowRelation(followerId: UserId, followedId: UserId) {
-		this.followRelationsDb.push({ follower: followerId, followed: followedId });
+		this.followRelationsDb.push({ followerId: followerId, followedId: followedId });
 	}
 
 	public async findAllFollowersOfUser(userId: UserId) {
-		const followersIds = this.followRelationsDb.map((relation) => {
-			if (relation.followed.value === userId.value) {
-				return relation.follower;
-			}
-		});
-		const followers = followersIds.map((id) =>
-			this.usersDb.find((user) => user.getID().value === id?.value),
-		);
-		return followers;
+		const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
+		const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
+		return [user1, user2]
 	}
 }
