@@ -129,7 +129,7 @@ describe("Users Model", () => {
 
 		it("Should return error if the user try to change they username by the same or for an invalid username", () => {
 			const user = new User(exampleUUID, exampleUsername, exampleEmail);
-			expect(() => user.changeUsername(exampleUsername)).toThrow();
+			expect(() => user.changeUsername(user.getName())).toThrow();
 			expect(() => user.changeUsername(1 as unknown as string)).toThrow();
 			expect(() => user.changeUsername([] as unknown as string)).toThrow();
 			expect(() => user.changeUsername({} as unknown as string)).toThrow();
@@ -139,6 +139,30 @@ describe("Users Model", () => {
 			expect(() => user.changeUsername("" as unknown as string)).toThrow();
 			expect(() => user.changeUsername("a s f g" as unknown as string)).toThrow();
 			expect(() => user.changeUsername("i@sf!" as unknown as string)).toThrow();
+		});
+
+		it("Should throw an error if try to change the user email for an invalid email, or the same", () => {
+			const user = new User(exampleUUID, exampleUsername, exampleEmail);
+			expect(() => user.changeEmail(user.getEmail())).toThrow();
+			expect(() => user.changeEmail([] as unknown as string)).toThrow();
+			expect(() => user.changeEmail({} as unknown as string)).toThrow();
+			expect(() => user.changeEmail(true as unknown as string)).toThrow();
+			expect(() => user.changeEmail(1 as unknown as string)).toThrow();
+			expect(() => user.changeEmail(undefined as unknown as string)).toThrow();
+			expect(() => user.changeEmail(null as unknown as string)).toThrow();
+			expect(() => user.changeEmail(NaN as unknown as string)).toThrow();
+			expect(() => user.changeEmail("")).toThrow();
+			expect(() => user.changeEmail("bademail")).toThrow();
+			expect(() => user.changeEmail("bad email")).toThrow();
+			expect(() => user.changeEmail("bademail.com")).toThrow();
+			expect(() => user.changeEmail("@email")).toThrow();
+			expect(() => user.changeEmail("bad@email.")).toThrow();
+			expect(() => user.changeEmail("bad@email!.com")).toThrow();
+			expect(() => user.changeEmail("bad.com@email")).toThrow();
+			expect(() => user.changeEmail("bad@@email.com")).toThrow();
+			expect(() => user.changeEmail("bad@email..com")).toThrow();
+			expect(() => user.changeEmail("用户@示例.email")).toThrow();
+			expect(() => user.changeEmail("bad@email")).toThrow();
 		});
 	});
 });

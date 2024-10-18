@@ -1,7 +1,7 @@
 export default class User {
 	private readonly id: string;
 	private username: string;
-	private readonly email: string;
+	private email: string;
 
 	constructor(uuid: string, username: string, email: string) {
 		if (!User.isValidUsername(username)) throw 1;
@@ -32,6 +32,12 @@ export default class User {
 		if (newUsername === this.username) throw 1;
 		else if (!User.isValidUsername(newUsername)) throw 1;
 		else this.username = newUsername;
+	}
+
+	public changeEmail(newEmail: string) {
+		if (newEmail === this.email) throw 1;
+		else if (!User.isValidEmail(newEmail)) throw 1;
+		else this.email = newEmail;
 	}
 
 	private static isValidUUID(uuid: string): boolean {
