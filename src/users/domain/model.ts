@@ -39,7 +39,6 @@ export class UserId {
 	readonly value: string;
 
 	constructor(id: string) {
-		console.log(id);
 		if (!UserId.isValidUUID(id)) throw 1;
 		this.value = id;
 	}
@@ -54,7 +53,6 @@ export class Username {
 	readonly value: string;
 
 	constructor(username: string) {
-		console.log(username);
 		if (!Username.isValidUsername(username)) throw 1;
 		this.value = username;
 	}
@@ -69,7 +67,6 @@ export class UserEmail {
 	readonly value: string;
 
 	constructor(email: string) {
-		console.log(email);
 		if (!UserEmail.isValidEmail(email)) throw 1;
 		this.value = email;
 	}
