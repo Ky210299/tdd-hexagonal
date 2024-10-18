@@ -29,8 +29,10 @@ describe("Users Model", () => {
 		});
 
 		it("Should throw an error if not valid uuid is passed", () => {
+			expect(() => User.createUser("1 2 3 4 5", exampleUsername, exampleEmail)).toThrow();
+			expect(() => User.createUser("abc123abc", exampleUsername, exampleEmail)).toThrow();
+			expect(() => User.createUser("12-123-123", exampleUsername, exampleEmail)).toThrow();
 			expect(() => User.createUser("1234", exampleUsername, exampleEmail)).toThrow();
-
 			expect(() =>
 				User.createUser(1 as unknown as string, exampleUsername, exampleEmail),
 			).toThrow();
@@ -46,14 +48,15 @@ describe("Users Model", () => {
 
 		it("Should throw an error if not valid username", () => {
 			expect(() => User.createUser(exampleUUID, 1 as unknown as string, exampleEmail)).toThrow();
-
 			expect(() => User.createUser(exampleUUID, true as unknown as string, exampleEmail)).toThrow();
-
 			expect(() => User.createUser(exampleUUID, "a s d f ", exampleEmail)).toThrow();
-
 			expect(() => User.createUser(exampleUUID, "a!@$", exampleEmail)).toThrow();
-
 			expect(() => User.createUser(exampleUUID, {} as unknown as string, exampleEmail)).toThrow();
+
+			expect(() => User.createUser(exampleUUID, "Robert", exampleEmail)).not.toThrow();
+			expect(() => User.createUser(exampleUUID, "Jhon", exampleEmail)).not.toThrow();
+			expect(() => User.createUser(exampleUUID, "Ky2102", exampleEmail)).not.toThrow();
+			expect(() => User.createUser(exampleUUID, "Act__2", exampleEmail)).not.toThrow();
 		});
 
 		it("Should throw an error if not valid email is passed", () => {
@@ -71,49 +74,22 @@ describe("Users Model", () => {
 				User.createUser(exampleUUID, exampleUsername, true as unknown as string),
 			).toThrow();
 
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "bademail" as unknown as string),
-			).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bademail")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad email")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bademail.com")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "@email")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email.")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email!.com")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad.com@email")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@@email.com")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email..com")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "用户@示例.email")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email")).toThrow();
 
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "bad email" as unknown as string),
-			).toThrow();
-
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "bademail.com" as unknown as string),
-			).toThrow();
-
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "@email" as unknown as string),
-			).toThrow();
-
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "bad@email." as unknown as string),
-			).toThrow();
-
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "bad@email!.com" as unknown as string),
-			).toThrow();
-
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "bad.com@email" as unknown as string),
-			).toThrow();
-
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "bad@@email.com" as unknown as string),
-			).toThrow();
-
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "bad@email..com" as unknown as string),
-			).toThrow();
-
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "用户@示例.email" as unknown as string),
-			).toThrow();
-
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, "bad@email" as unknown as string),
-			).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "good@email.com")).not.toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "Jhon@email.com")).not.toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "Leo@email.cu")).not.toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "alf24@email.org")).not.toThrow();
 		});
 
 		it("Should return an user instance", () => {

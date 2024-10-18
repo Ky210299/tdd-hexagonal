@@ -3,8 +3,8 @@ export default class User {
 	private username: Username;
 	private email: UserEmail;
 
-	constructor(uuid: string, username: string, email: string) {
-		this.id = new UserId(uuid);
+	constructor(id: string, username: string, email: string) {
+		this.id = new UserId(id);
 		this.username = new Username(username);
 		this.email = new UserEmail(email);
 	}
@@ -37,7 +37,9 @@ export default class User {
 
 export class UserId {
 	readonly value: string;
+
 	constructor(id: string) {
+		console.log(id);
 		if (!UserId.isValidUUID(id)) throw 1;
 		this.value = id;
 	}
@@ -50,7 +52,9 @@ export class UserId {
 
 export class Username {
 	readonly value: string;
+
 	constructor(username: string) {
+		console.log(username);
 		if (!Username.isValidUsername(username)) throw 1;
 		this.value = username;
 	}
@@ -63,7 +67,9 @@ export class Username {
 
 export class UserEmail {
 	readonly value: string;
+
 	constructor(email: string) {
+		console.log(email);
 		if (!UserEmail.isValidEmail(email)) throw 1;
 		this.value = email;
 	}
