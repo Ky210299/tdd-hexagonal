@@ -126,5 +126,19 @@ describe("Users Model", () => {
 			expect(newUser.getEmail() === exampleEmail).toBeTruthy();
 			expect(newUser.getName() === exampleUsername).toBeTruthy();
 		});
+
+		it("Should return error if the user try to change they username by the same or for an invalid username", () => {
+			const user = new User(exampleUUID, exampleUsername, exampleEmail);
+			expect(() => user.changeUsername(exampleUsername)).toThrow();
+			expect(() => user.changeUsername(1 as unknown as string)).toThrow();
+			expect(() => user.changeUsername([] as unknown as string)).toThrow();
+			expect(() => user.changeUsername({} as unknown as string)).toThrow();
+			expect(() => user.changeUsername(true as unknown as string)).toThrow();
+			expect(() => user.changeUsername(undefined as unknown as string)).toThrow();
+			expect(() => user.changeUsername(null as unknown as string)).toThrow();
+			expect(() => user.changeUsername("" as unknown as string)).toThrow();
+			expect(() => user.changeUsername("a s f g" as unknown as string)).toThrow();
+			expect(() => user.changeUsername("i@sf!" as unknown as string)).toThrow();
+		});
 	});
 });
