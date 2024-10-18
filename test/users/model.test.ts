@@ -12,9 +12,9 @@ describe("Users functionalities", () => {
 	const exampleUsername = "Robert";
 	describe("Create an user", () => {
 		it("Should throw an error if not uuid, username or email is passed", () => {
-			expect(() => User.createUser(null, null, null)).toThrow;
-			expect(() => User.createUser("", "", "")).toThrow();
-			expect(() => User.createUser(undefined, undefined, undefined)).toThrow();
+			expect(() => new User(null, null, null)).toThrow;
+			expect(() => new User("", "", "")).toThrow();
+			expect(() => new User(undefined, undefined, undefined)).toThrow();
 		});
 
 		it("Should throw an error if not valid uuid is passed", () => {
