@@ -40,4 +40,23 @@ describe("User Services", () => {
 			expect(err).toMatch("follow it self");
 		}
 	});
+
+	it("Should follow to other user", async () => {
+		const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
+		const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
+		try {
+			await userService.follow(user2.getID().value, user1.getID().value);
+			const followers = await userService.findFollowersOfUser(user1.getID().value);
+			expect(followers[0]).toBe(user1);
+		} catch (err) {}
+	});
+
+	it("Should retrieve a list with all followers of an user", async () => {
+		try {
+			const followers = await userService.findFollowersOfUser(exampleUUID);
+			expect(Array.isArray(followers)).toBeTruthy();
+			expect(followers.length > 0);
+			expect(followers.every((follower) => follower instanceof User));
+		} catch (err) {}
+	});
 });

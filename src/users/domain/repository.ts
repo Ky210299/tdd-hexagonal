@@ -5,4 +5,6 @@ export default interface UserRepository {
 	save: (user: User) => Promise<void>;
 	find: (id: UserId) => Promise<User | undefined>;
 	findAll: () => Promise<Array<User>>;
+	addFollowRelation: (followerId: UserId, followedId: UserId) => Promise<void>;
+	findAllFollowersOfUser: (id: UserId) => Promise<Array<User>>;
 }
