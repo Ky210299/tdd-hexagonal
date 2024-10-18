@@ -2,12 +2,16 @@ import User, { UserId, Username, UserEmail } from "../domain/model";
 import UserRepository from "../domain/repository";
 
 export default class InMemoryUserRepository implements UserRepository {
-	private readonly db: Record<string, User> = {};
+	private readonly db: Array<User> = [];
+
 	public async save(user: User) {
-		this.db[user.getName().value] = user;
+		this.db.push(user);
 	}
 	public async find(id: UserId) {
-		const user = Object.values(this.db).find((user) => user.getID().value === id.value);
-		return user;
+		return this.db.find((user) => user.getID().value === id.value);
+	}
+
+	public async findAll() {
+		return this.db.slice();
 	}
 }
