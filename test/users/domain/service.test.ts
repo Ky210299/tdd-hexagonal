@@ -14,7 +14,7 @@ describe("User Services", () => {
 	it("Should retrieve an user in the database", async () => {
 		const user = new User(exampleUUID, exampleUsername, exampleEmail);
 		await userService.saveUser(user);
-		const sameUser = await userService.findUser(user.getID());
+		const sameUser = await userService.findUser(user.getID().value);
 		expect(sameUser).not.toBe(undefined);
 		if (sameUser) expect(user.getID().value === sameUser.getID().value);
 	});
@@ -32,4 +32,9 @@ describe("User Services", () => {
 		expect(users.length > 0).toBeTruthy();
 		expect(users.every((e) => e instanceof User)).toBeTruthy();
 	});
+
+	// it("Should throw an error if try to follow you self", async () => {
+	// 	const user = new User(exampleUUID, exampleUsername, exampleEmail);
+	// 	await userService.followTo(exampleUUID);
+	// });
 });

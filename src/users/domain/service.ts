@@ -12,8 +12,9 @@ export default class UserService {
 	public async saveUser(user: User) {
 		await this.repository.save(user);
 	}
-	public async findUser(id: UserId) {
-		return await this.repository.find(id);
+
+	public async findUser(id: string) {
+		return await this.repository.find(new UserId(id));
 	}
 
 	public async findAllUsers() {
