@@ -164,5 +164,19 @@ describe("Users Model", () => {
 			expect(() => user.changeEmail("用户@示例.email")).toThrow();
 			expect(() => user.changeEmail("bad@email")).toThrow();
 		});
+
+		it("Should change correctly the username", () => {
+			const newUsername = "Jhon22";
+			const user = new User(exampleUUID, exampleUsername, exampleEmail);
+			user.changeUsername(newUsername);
+			expect(user.getName() === newUsername).toBeTruthy();
+		});
+
+		it("Should change correctly the email", () => {
+			const newEmail = "new@email.com";
+			const user = new User(exampleUUID, exampleUsername, exampleEmail);
+			user.changeEmail(newEmail);
+			expect(user.getEmail() === newEmail);
+		});
 	});
 });
