@@ -1,4 +1,5 @@
 import User from "../../../src/users/domain/model";
+import { UserId, Username, UserEmail } from "../../../src/users/domain/model";
 
 describe("Jest should work", () => {
 	it("should work", () => {
@@ -122,14 +123,14 @@ describe("Users Model", () => {
 
 		it("The created user should have the passed id, username and email", () => {
 			const newUser = User.createUser(exampleUUID, exampleUsername, exampleEmail);
-			expect(newUser.getID() === exampleUUID).toBeTruthy();
-			expect(newUser.getEmail() === exampleEmail).toBeTruthy();
-			expect(newUser.getName() === exampleUsername).toBeTruthy();
+			expect(newUser.getID().value === exampleUUID).toBeTruthy();
+			expect(newUser.getEmail().value === exampleEmail).toBeTruthy();
+			expect(newUser.getName().value === exampleUsername).toBeTruthy();
 		});
 
 		it("Should return error if the user try to change they username by the same or for an invalid username", () => {
 			const user = new User(exampleUUID, exampleUsername, exampleEmail);
-			expect(() => user.changeUsername(user.getName())).toThrow();
+			expect(() => user.changeUsername(user.getName().value)).toThrow();
 			expect(() => user.changeUsername(1 as unknown as string)).toThrow();
 			expect(() => user.changeUsername([] as unknown as string)).toThrow();
 			expect(() => user.changeUsername({} as unknown as string)).toThrow();
@@ -143,7 +144,7 @@ describe("Users Model", () => {
 
 		it("Should throw an error if try to change the user email for an invalid email, or the same", () => {
 			const user = new User(exampleUUID, exampleUsername, exampleEmail);
-			expect(() => user.changeEmail(user.getEmail())).toThrow();
+			expect(() => user.changeEmail(user.getEmail().value)).toThrow();
 			expect(() => user.changeEmail([] as unknown as string)).toThrow();
 			expect(() => user.changeEmail({} as unknown as string)).toThrow();
 			expect(() => user.changeEmail(true as unknown as string)).toThrow();
@@ -169,14 +170,14 @@ describe("Users Model", () => {
 			const newUsername = "Jhon22";
 			const user = new User(exampleUUID, exampleUsername, exampleEmail);
 			user.changeUsername(newUsername);
-			expect(user.getName() === newUsername).toBeTruthy();
+			expect(user.getName().value === newUsername).toBeTruthy();
 		});
 
 		it("Should change correctly the email", () => {
 			const newEmail = "new@email.com";
 			const user = new User(exampleUUID, exampleUsername, exampleEmail);
 			user.changeEmail(newEmail);
-			expect(user.getEmail() === newEmail);
+			expect(user.getEmail().value === newEmail);
 		});
 	});
 });

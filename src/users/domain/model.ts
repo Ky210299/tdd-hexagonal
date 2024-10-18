@@ -1,20 +1,16 @@
 export default class User {
-	private readonly id: string;
-	private username: string;
-	private email: string;
+	private readonly id: UserId;
+	private username: Username;
+	private email: UserEmail;
 
 	constructor(uuid: string, username: string, email: string) {
-		if (!User.isValidUsername(username)) throw 1;
-		else if (!User.isValidEmail(email)) throw 1;
-		else if (!User.isValidUUID(uuid)) throw 1;
-
-		this.id = uuid;
-		this.username = username;
-		this.email = email;
+		this.id = new UserId(uuid);
+		this.username = new Username(username);
+		this.email = new UserEmail(email);
 	}
 
-	public static createUser(uuid: string, username: string, email: string) {
-		return new User(uuid, username, email);
+	public static createUser(id: string, username: string, email: string) {
+		return new User(id, username, email);
 	}
 
 	public getName() {
@@ -29,29 +25,48 @@ export default class User {
 	}
 
 	public changeUsername(newUsername: string) {
-		if (newUsername === this.username) throw 1;
-		else if (!User.isValidUsername(newUsername)) throw 1;
-		else this.username = newUsername;
+		if (newUsername === this.username.value) throw 1;
+		else this.username = new Username(newUsername);
 	}
 
 	public changeEmail(newEmail: string) {
-		if (newEmail === this.email) throw 1;
-		else if (!User.isValidEmail(newEmail)) throw 1;
-		else this.email = newEmail;
+		if (newEmail === this.email.value) throw 1;
+		else this.email = new UserEmail(newEmail);
 	}
+}
 
+export class UserId {
+	readonly value: string;
+	constructor(id: string) {
+		if (!UserId.isValidUUID(id)) throw 1;
+		this.value = id;
+	}
 	private static isValidUUID(uuid: string): boolean {
 		if (!uuid || typeof uuid !== "string") return false;
 		const RegExpForUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 		return RegExpForUUID.test(uuid);
 	}
+}
 
+export class Username {
+	readonly value: string;
+	constructor(username: string) {
+		if (!Username.isValidUsername(username)) throw 1;
+		this.value = username;
+	}
 	private static isValidUsername(username: string): boolean {
 		if (!username || typeof username !== "string") return false;
 		const RegExpForUsername = /^[a-zA-Z0-9_]+$/;
 		return RegExpForUsername.test(username);
 	}
+}
 
+export class UserEmail {
+	readonly value: string;
+	constructor(email: string) {
+		if (!UserEmail.isValidEmail(email)) throw 1;
+		this.value = email;
+	}
 	private static isValidEmail(email: string): boolean {
 		if (!email || typeof email !== "string") return false;
 		const RegExpForEmail =
