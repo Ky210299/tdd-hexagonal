@@ -1,4 +1,4 @@
-import User from "../../src/users/model";
+import User from "../../../src/users/domain/model";
 
 describe("Jest should work", () => {
 	it("should work", () => {
