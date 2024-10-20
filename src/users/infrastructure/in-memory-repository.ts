@@ -27,6 +27,12 @@ export default class InMemoryUserRepository implements UserRepository {
 	public async findAllFollowersOfUser(userId: UserId) {
 		const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
 		const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
-		return [user1, user2]
+		return [user1, user2];
+	}
+
+	public async findAllFollowedsByUser(userId: UserId) {
+		const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
+		const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
+		return [user1, user2];
 	}
 }

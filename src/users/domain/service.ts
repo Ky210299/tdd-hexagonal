@@ -28,4 +28,8 @@ export default class UserService {
 	public async findFollowersOfUser(userId: string) {
 		return await this.repository.findAllFollowersOfUser(new UserId(userId));
 	}
+
+	public async findFollowedsByUser(userId: string) {
+		return await this.repository.findAllFollowedsByUser(new UserId(userId));
+	}
 }

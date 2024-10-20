@@ -33,44 +33,68 @@ describe("User Services", () => {
 		expect(users.every((e) => e instanceof User)).toBeTruthy();
 	});
 
-	it("Should throw an error if try to follow it self", async () => {
-		try {
-			await userService.follow(exampleUUID, exampleUUID);
-		} catch (err) {
-			expect(err).toMatch("follow it self");
-		}
-	});
+	describe("Following feature", () => {
+		it("Should throw an error if try to follow it self", async () => {
+			try {
+				await userService.follow(exampleUUID, exampleUUID);
+			} catch (err) {
+				expect(err).toMatch("follow it self");
+			}
+		});
 
-	it("Should follow to other user", async () => {
-		const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
-		const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
-		try {
-			await userService.follow(user2.getID().value, user1.getID().value);
-			const followers = await userService.findFollowersOfUser(user1.getID().value);
-			expect(followers[0]).toBe(user1);
-		} catch (err) {}
-	});
+		it("Should follow to other user", async () => {
+			const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
+			const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
+			try {
+				await userService.follow(user2.getID().value, user1.getID().value);
+				const followers = await userService.findFollowersOfUser(user1.getID().value);
+				expect(followers[0]).toBe(user1);
+			} catch (err) {}
+		});
 
-	it("Should retrieve a list with all followers of an user", async () => {
-		const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
-		const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
-		try {
-			await userService.follow(user2.getID().value, user1.getID().value);
-			const followers = await userService.findFollowersOfUser(user1.getID().value);
-			expect(Array.isArray(followers)).toBeTruthy();
-			expect(followers.length > 0).toBeTruthy();
-			expect(followers.every((follower) => follower instanceof User)).toBeTruthy();
-		} catch (err) {
-			expect(err.matcherResult.pass).toBeTruthy();
-		}
-	});
+		it("Should retrieve a list with all followers of an user", async () => {
+			const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
+			const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
+			try {
+				await userService.follow(user2.getID().value, user1.getID().value);
+				const followers = await userService.findFollowersOfUser(user1.getID().value);
+				expect(Array.isArray(followers)).toBeTruthy();
+				expect(followers.length > 0).toBeTruthy();
+				expect(followers.every((follower) => follower instanceof User)).toBeTruthy();
+			} catch (err) {
+				expect(err.matcherResult.pass).toBeTruthy();
+			}
+		});
 
-	it("Should retrieve a list with all followed users by an specific user", async () => {
-		try {
-			const followeds = await userService.findFollowersOfUser(exampleUUID);
-			expect(Array.isArray(followeds)).toBeTruthy();
-			expect(followeds.length > 0);
-			expect(followeds.every((follower) => follower instanceof User));
-		} catch (err) {}
+		it("Should retrieve a list with all followers users of a specific user", async () => {
+			const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
+			const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
+			try {
+				userService.follow(user2.getID().value, user1.getID().value);
+			} catch (err) {}
+			try {
+				const followers = await userService.findFollowersOfUser(exampleUUID);
+				expect(Array.isArray(followers)).toBeTruthy();
+				expect(followers.length > 0);
+				expect(followers.every((follower) => follower instanceof User));
+			} catch (err) {}
+		});
+
+		it("Should retrieve a list with the followed users by an user", async () => {
+			const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
+			const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
+			try {
+				await userService.follow(user2.getID().value, user1.getID().value);
+				await userService.follow(user2.getID().value, user1.getID().value);
+			} catch (err) {}
+
+			try {
+				const user1Id = user1.getID().value;
+				const followeds = await userService.findFollowedsByUser(user1Id);
+				expect(Array.isArray(followeds)).toBeTruthy();
+				expect(followeds.length > 0).toBeTruthy();
+				expect(followeds.every((followed) => followed instanceof User)).toBeTruthy();
+			} catch (err) {}
+		});
 	});
 });
