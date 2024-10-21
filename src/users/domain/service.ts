@@ -23,6 +23,7 @@ export default class UserService {
 
 	public async follow(followerId: string, followedId: string) {
 		if (followerId === followedId) throw "follow it self";
+		await this.repository.addFollowRelation(new UserId(followerId), new UserId(followedId));
 	}
 
 	public async findFollowersOfUser(userId: string) {
@@ -31,5 +32,9 @@ export default class UserService {
 
 	public async findFollowedsByUser(userId: string) {
 		return await this.repository.findAllFollowedsByUser(new UserId(userId));
+	}
+
+	public async isFollowing(followerId: string, followedId: string) {
+		return await this.repository.isFollowing(new UserId(followerId), new UserId(followedId));
 	}
 }

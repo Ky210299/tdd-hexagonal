@@ -48,8 +48,10 @@ describe("User Services", () => {
 			try {
 				await userService.follow(user2.getID().value, user1.getID().value);
 				const followers = await userService.findFollowersOfUser(user1.getID().value);
-				expect(followers[0]).toBe(user1);
-			} catch (err) {}
+				expect(followers[0]).toStrictEqual(user1);
+			} catch (err) {
+				throw err;
+			}
 		});
 
 		it("Should retrieve a list with all followers of an user", async () => {
@@ -62,7 +64,7 @@ describe("User Services", () => {
 				expect(followers.length > 0).toBeTruthy();
 				expect(followers.every((follower) => follower instanceof User)).toBeTruthy();
 			} catch (err) {
-				expect(err.matcherResult.pass).toBeTruthy();
+				throw err;
 			}
 		});
 
@@ -71,13 +73,17 @@ describe("User Services", () => {
 			const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
 			try {
 				userService.follow(user2.getID().value, user1.getID().value);
-			} catch (err) {}
+			} catch (err) {
+				throw err;
+			}
 			try {
 				const followers = await userService.findFollowersOfUser(exampleUUID);
 				expect(Array.isArray(followers)).toBeTruthy();
 				expect(followers.length > 0);
 				expect(followers.every((follower) => follower instanceof User));
-			} catch (err) {}
+			} catch (err) {
+				throw err;
+			}
 		});
 
 		it("Should retrieve a list with the followed users by an user", async () => {
@@ -86,7 +92,9 @@ describe("User Services", () => {
 			try {
 				await userService.follow(user2.getID().value, user1.getID().value);
 				await userService.follow(user2.getID().value, user1.getID().value);
-			} catch (err) {}
+			} catch (err) {
+				throw err;
+			}
 
 			try {
 				const user1Id = user1.getID().value;
@@ -94,7 +102,23 @@ describe("User Services", () => {
 				expect(Array.isArray(followeds)).toBeTruthy();
 				expect(followeds.length > 0).toBeTruthy();
 				expect(followeds.every((followed) => followed instanceof User)).toBeTruthy();
-			} catch (err) {}
+			} catch (err) {
+				throw err;
+			}
+		});
+
+		it("Should return true when an user is following to another", async () => {
+			const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
+			const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
+			try {
+				await userService.follow(user2.getID().value, user1.getID().value);
+				const user1Id = user1.getID().value;
+				const user2Id = user2.getID().value;
+				const isFollowing = await userService.isFollowing(user2Id, user1Id);
+				expect(isFollowing).toBe(true);
+			} catch (err) {
+				throw err;
+			}
 		});
 	});
 });

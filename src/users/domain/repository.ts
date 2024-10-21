@@ -7,5 +7,6 @@ export default interface UserRepository {
 	findAll: () => Promise<Array<User>>;
 	addFollowRelation: (followerId: UserId, followedId: UserId) => Promise<void>;
 	findAllFollowersOfUser: (id: UserId) => Promise<Array<User>>;
-	findAllFollowedsByUser: (id: UserID) => Promise<Array<User>>;
+	findAllFollowedsByUser: (id: UserId) => Promise<Array<User>>;
+	isFollowing: (followerID: UserId, FollowedId: UserId) => Promise<boolean>;
 }

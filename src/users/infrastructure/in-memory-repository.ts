@@ -21,7 +21,7 @@ export default class InMemoryUserRepository implements UserRepository {
 	}
 
 	public async addFollowRelation(followerId: UserId, followedId: UserId) {
-		this.followRelationsDb.push({ followerId: followerId, followedId: followedId });
+		this.followRelationsDb.push({ followerId, followedId });
 	}
 
 	public async findAllFollowersOfUser(userId: UserId) {
@@ -34,5 +34,15 @@ export default class InMemoryUserRepository implements UserRepository {
 		const user1 = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
 		const user2 = new User("123e4567-e89b-12d3-a456-42665544000a", "Jhon", "jhon@mail.com");
 		return [user1, user2];
+	}
+
+	public async isFollowing(followerId: UserId, followedId: UserId) {
+		const isFollowing = this.followRelationsDb.some((relation) => {
+			return (
+				relation.followerId.value === followerId.value &&
+				relation.followedId.value === followedId.value
+			);
+		});
+		return isFollowing;
 	}
 }
