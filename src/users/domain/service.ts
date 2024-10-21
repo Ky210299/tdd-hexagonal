@@ -1,4 +1,4 @@
-import type User from "./model";
+import User from "./model";
 import { UserId } from "./model";
 import UserRepository from "./repository";
 
@@ -36,5 +36,9 @@ export default class UserService {
 
 	public async isFollowing(followerId: string, followedId: string) {
 		return await this.repository.isFollowing(new UserId(followerId), new UserId(followedId));
+	}
+
+	public async changeUserData(userId: string, newUserData: User) {
+		await this.repository.updateUser(new UserId(userId), newUserData);
 	}
 }

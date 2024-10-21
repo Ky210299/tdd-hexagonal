@@ -45,4 +45,11 @@ export default class InMemoryUserRepository implements UserRepository {
 		});
 		return isFollowing;
 	}
+
+	public async updateUser(userId: UserId, newUserData: User) {
+		const userIndex = this.usersDb.findIndex((user) => user.getID().value === userId.value);
+		if (userIndex === -1) throw 1;
+		this.usersDb.splice(userIndex);
+		this.usersDb.push(newUserData);
+	}
 }
