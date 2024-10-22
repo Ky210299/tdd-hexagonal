@@ -91,31 +91,55 @@ describe("Users Model", () => {
 		});
 
 		it("Should throw an error if not valid email is passed", () => {
-			expect(() => User.createUser(exampleUUID, exampleUsername, 1 as unknown as string)).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, 1 as unknown as string)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
 
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, [] as unknown as string),
-			).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, [] as unknown as string)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
 
-			expect(() =>
-				User.createUser(exampleUUID, exampleUsername, {} as unknown as string),
-			).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, {} as unknown as string)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
 
 			expect(() =>
 				User.createUser(exampleUUID, exampleUsername, true as unknown as string),
-			).toThrow();
+			).toThrow(UserError.InvalidUserEmailError);
 
-			expect(() => User.createUser(exampleUUID, exampleUsername, "bademail")).toThrow();
-			expect(() => User.createUser(exampleUUID, exampleUsername, "bad email")).toThrow();
-			expect(() => User.createUser(exampleUUID, exampleUsername, "bademail.com")).toThrow();
-			expect(() => User.createUser(exampleUUID, exampleUsername, "@email")).toThrow();
-			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email.")).toThrow();
-			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email!.com")).toThrow();
-			expect(() => User.createUser(exampleUUID, exampleUsername, "bad.com@email")).toThrow();
-			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@@email.com")).toThrow();
-			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email..com")).toThrow();
-			expect(() => User.createUser(exampleUUID, exampleUsername, "用户@示例.email")).toThrow();
-			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email")).toThrow();
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bademail")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad email")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bademail.com")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => User.createUser(exampleUUID, exampleUsername, "@email")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email.")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email!.com")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad.com@email")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@@email.com")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email..com")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => User.createUser(exampleUUID, exampleUsername, "用户@示例.email")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => User.createUser(exampleUUID, exampleUsername, "bad@email")).toThrow(
+				UserError.InvalidUserEmailError,
+			);
 
 			expect(() => User.createUser(exampleUUID, exampleUsername, "good@email.com")).not.toThrow();
 			expect(() => User.createUser(exampleUUID, exampleUsername, "Jhon@email.com")).not.toThrow();
