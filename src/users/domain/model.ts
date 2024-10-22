@@ -27,12 +27,14 @@ export default class User {
 	}
 
 	public changeUsername(newUsername: string) {
-		if (newUsername === this.username.value) throw new InvalidUsernameError("That's already the current username");
+		if (newUsername === this.username.value)
+			throw new InvalidUsernameError("That's already the current username");
 		else this.username = new Username(newUsername);
 	}
 
 	public changeEmail(newEmail: string) {
-		if (newEmail === this.email.value) throw 1;
+		if (newEmail === this.email.value)
+			throw new InvalidUserEmailError("That's alredy the current email");
 		else this.email = new UserEmail(newEmail);
 	}
 }

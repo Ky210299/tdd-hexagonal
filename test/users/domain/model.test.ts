@@ -195,26 +195,42 @@ describe("Users Model", () => {
 
 		it("Should throw an error if try to change the user email for an invalid email, or the same", () => {
 			const user = new User(exampleUUID, exampleUsername, exampleEmail);
-			expect(() => user.changeEmail(user.getEmail().value)).toThrow();
-			expect(() => user.changeEmail([] as unknown as string)).toThrow();
-			expect(() => user.changeEmail({} as unknown as string)).toThrow();
-			expect(() => user.changeEmail(true as unknown as string)).toThrow();
-			expect(() => user.changeEmail(1 as unknown as string)).toThrow();
-			expect(() => user.changeEmail(undefined as unknown as string)).toThrow();
-			expect(() => user.changeEmail(null as unknown as string)).toThrow();
-			expect(() => user.changeEmail(NaN as unknown as string)).toThrow();
-			expect(() => user.changeEmail("")).toThrow();
-			expect(() => user.changeEmail("bademail")).toThrow();
-			expect(() => user.changeEmail("bad email")).toThrow();
-			expect(() => user.changeEmail("bademail.com")).toThrow();
-			expect(() => user.changeEmail("@email")).toThrow();
-			expect(() => user.changeEmail("bad@email.")).toThrow();
-			expect(() => user.changeEmail("bad@email!.com")).toThrow();
-			expect(() => user.changeEmail("bad.com@email")).toThrow();
-			expect(() => user.changeEmail("bad@@email.com")).toThrow();
-			expect(() => user.changeEmail("bad@email..com")).toThrow();
-			expect(() => user.changeEmail("用户@示例.email")).toThrow();
-			expect(() => user.changeEmail("bad@email")).toThrow();
+			expect(() => user.changeEmail(user.getEmail().value)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => user.changeEmail([] as unknown as string)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => user.changeEmail({} as unknown as string)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => user.changeEmail(true as unknown as string)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => user.changeEmail(1 as unknown as string)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => user.changeEmail(undefined as unknown as string)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => user.changeEmail(null as unknown as string)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => user.changeEmail(NaN as unknown as string)).toThrow(
+				UserError.InvalidUserEmailError,
+			);
+			expect(() => user.changeEmail("")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("bademail")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("bad email")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("bademail.com")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("@email")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("bad@email.")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("bad@email!.com")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("bad.com@email")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("bad@@email.com")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("bad@email..com")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("用户@示例.email")).toThrow(UserError.InvalidUserEmailError);
+			expect(() => user.changeEmail("bad@email")).toThrow(UserError.InvalidUserEmailError);
 		});
 
 		it("Should change correctly the username", () => {
