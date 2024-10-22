@@ -153,5 +153,14 @@ describe("User Services", () => {
 				throw err;
 			}
 		});
+
+		it("Should throw an error if the user does not exist", async () => {
+			try {
+				await userService.deleteUser(exampleUUID);
+			} catch (err) {
+				console.log(err);
+				expect(err).toBe(1);
+			}
+		});
 	});
 });

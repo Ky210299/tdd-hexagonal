@@ -43,6 +43,9 @@ export default class UserService {
 	}
 
 	public async deleteUser(userId: string) {
-		await this.repository.removeUser(new UserId(userId));
+		const userExist = await this.findUser(userId);
+
+		if (userExist === undefined) throw 1;
+		else await this.repository.removeUser(new UserId(userId));
 	}
 }
