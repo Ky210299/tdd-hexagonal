@@ -1,4 +1,4 @@
-import { InvalidUserEmailError, InvalidUserIdError } from "./errors";
+import { InvalidUserEmailError, InvalidUserIdError, InvalidUsernameError } from "./errors";
 
 export default class User {
 	private readonly id: UserId;
@@ -55,7 +55,7 @@ export class Username {
 	readonly value: string;
 
 	constructor(username: string) {
-		if (!Username.isValidUsername(username)) throw 1;
+		if (!Username.isValidUsername(username)) throw new InvalidUsernameError();
 		this.value = username;
 	}
 	private static isValidUsername(username: string): boolean {

@@ -60,16 +60,34 @@ describe("Users Model", () => {
 		});
 
 		it("Should throw an error if not valid username", () => {
-			expect(() => User.createUser(exampleUUID, 1 as unknown as string, exampleEmail)).toThrow();
-			expect(() => User.createUser(exampleUUID, true as unknown as string, exampleEmail)).toThrow();
-			expect(() => User.createUser(exampleUUID, "a s d f ", exampleEmail)).toThrow();
-			expect(() => User.createUser(exampleUUID, "a!@$", exampleEmail)).toThrow();
-			expect(() => User.createUser(exampleUUID, {} as unknown as string, exampleEmail)).toThrow();
+			expect(() => User.createUser(exampleUUID, 1 as unknown as string, exampleEmail)).toThrow(
+				UserError.InvalidUsernameError,
+			);
+			expect(() => User.createUser(exampleUUID, true as unknown as string, exampleEmail)).toThrow(
+				UserError.InvalidUsernameError,
+			);
+			expect(() => User.createUser(exampleUUID, "a s d f ", exampleEmail)).toThrow(
+				UserError.InvalidUsernameError,
+			);
+			expect(() => User.createUser(exampleUUID, "a!@$", exampleEmail)).toThrow(
+				UserError.InvalidUsernameError,
+			);
+			expect(() => User.createUser(exampleUUID, {} as unknown as string, exampleEmail)).toThrow(
+				UserError.InvalidUsernameError,
+			);
 
-			expect(() => User.createUser(exampleUUID, "Robert", exampleEmail)).not.toThrow();
-			expect(() => User.createUser(exampleUUID, "Jhon", exampleEmail)).not.toThrow();
-			expect(() => User.createUser(exampleUUID, "Ky2102", exampleEmail)).not.toThrow();
-			expect(() => User.createUser(exampleUUID, "Act__2", exampleEmail)).not.toThrow();
+			expect(() => User.createUser(exampleUUID, "Robert", exampleEmail)).not.toThrow(
+				UserError.InvalidUsernameError,
+			);
+			expect(() => User.createUser(exampleUUID, "Jhon", exampleEmail)).not.toThrow(
+				UserError.InvalidUsernameError,
+			);
+			expect(() => User.createUser(exampleUUID, "Ky2102", exampleEmail)).not.toThrow(
+				UserError.InvalidUsernameError,
+			);
+			expect(() => User.createUser(exampleUUID, "Act__2", exampleEmail)).not.toThrow(
+				UserError.InvalidUsernameError,
+			);
 		});
 
 		it("Should throw an error if not valid email is passed", () => {
