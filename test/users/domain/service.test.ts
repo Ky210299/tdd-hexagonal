@@ -141,5 +141,17 @@ describe("User Services", () => {
 				throw err;
 			}
 		});
+
+		it("Should delete an user", async () => {
+			const user = new User(exampleUUID, exampleUsername, exampleEmail);
+			try {
+				await userService.saveUser(user);
+				expect((await userService.findUser(user.getID().value)) instanceof User).toBe(true);
+				await userService.deleteUser(user.getID().value);
+				expect(await userService.findUser(user.getID().value)).tobkj
+			} catch (err) {
+				throw err;
+			}
+		});
 	});
 });
