@@ -66,12 +66,21 @@ describe("User Services", () => {
 		}
 	});
 
-	it("Should throw an error if the user does not exist", async () => {
+	it("Should throw an error if the user does not exist when try to delete it", async () => {
 		try {
 			await userService.deleteUser(exampleUUID);
 		} catch (err) {
 			console.log(err);
 			expect(err).toBe(1);
+		}
+	});
+
+	it("Should return undefind when try to find an user that does not exist", async () => {
+		try {
+			const user = await userService.findUser(exampleUUID);
+			expect(user).toBeUndefined();
+		} catch (err) {
+			throw err;
 		}
 	});
 
