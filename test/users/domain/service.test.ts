@@ -148,7 +148,7 @@ describe("User Services", () => {
 				await userService.saveUser(user);
 				expect((await userService.findUser(user.getID().value)) instanceof User).toBe(true);
 				await userService.deleteUser(user.getID().value);
-				expect(await userService.findUser(user.getID().value)).tobkj
+				expect(await userService.findUser(user.getID().value)).toBeUndefined();
 			} catch (err) {
 				throw err;
 			}

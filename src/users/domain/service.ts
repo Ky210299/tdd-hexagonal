@@ -41,4 +41,8 @@ export default class UserService {
 	public async changeUserData(userId: string, newUserData: User) {
 		await this.repository.updateUser(new UserId(userId), newUserData);
 	}
+
+	public async deleteUser(userId: string) {
+		await this.repository.removeUser(new UserId(userId));
+	}
 }

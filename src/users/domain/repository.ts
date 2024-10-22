@@ -10,5 +10,5 @@ export default interface UserRepository {
 	findAllFollowedsByUser: (id: UserId) => Promise<Array<User>>;
 	isFollowing: (followerID: UserId, FollowedId: UserId) => Promise<boolean>;
 	updateUser: (userId: UserId, newUserData: User) => Promise<void>;
-	deletUser: (userId: UserId) => Promise<void>;
+	removeUser: (userId: UserId) => Promise<void>;
 }
