@@ -27,7 +27,7 @@ export default class User {
 	}
 
 	public changeUsername(newUsername: string) {
-		if (newUsername === this.username.value) throw 1;
+		if (newUsername === this.username.value) throw new InvalidUsernameError("That's already the current username");
 		else this.username = new Username(newUsername);
 	}
 
