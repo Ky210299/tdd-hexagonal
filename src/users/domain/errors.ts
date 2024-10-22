@@ -4,7 +4,7 @@ const ERRORS_CODE = {
 	INVALID_USER_EMAIL: 3,
 };
 
-class UserError extends Error {}
+export class UserError extends Error {}
 
 export class InvalidUserIdError extends UserError {
 	public readonly name: string;

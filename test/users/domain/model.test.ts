@@ -17,8 +17,8 @@ describe("Users Model", () => {
 			expect(
 				() =>
 					new User(null as unknown as string, null as unknown as string, null as unknown as string),
-			).toThrow;
-			expect(() => new User("", "", "")).toThrow();
+			).toThrow(UserError.UserError);
+			expect(() => new User("", "", "")).toThrow(UserError.UserError);
 			expect(
 				() =>
 					new User(
@@ -26,7 +26,7 @@ describe("Users Model", () => {
 						undefined as unknown as string,
 						undefined as unknown as string,
 					),
-			).toThrow();
+			).toThrow(UserError.UserError);
 		});
 
 		it("Should throw an error if not valid uuid is passed", () => {
