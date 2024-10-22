@@ -1,3 +1,5 @@
+import { InvalidUserEmailError, InvalidUserIdError } from "./errors";
+
 export default class User {
 	private readonly id: UserId;
 	private username: Username;
@@ -39,7 +41,7 @@ export class UserId {
 	readonly value: string;
 
 	constructor(id: string) {
-		if (!UserId.isValidUUID(id)) throw 1;
+		if (!UserId.isValidUUID(id)) throw new InvalidUserIdError();
 		this.value = id;
 	}
 	private static isValidUUID(uuid: string): boolean {
@@ -67,7 +69,7 @@ export class UserEmail {
 	readonly value: string;
 
 	constructor(email: string) {
-		if (!UserEmail.isValidEmail(email)) throw 1;
+		if (!UserEmail.isValidEmail(email)) throw new InvalidUserEmailError();
 		this.value = email;
 	}
 	private static isValidEmail(email: string): boolean {

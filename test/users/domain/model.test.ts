@@ -1,5 +1,6 @@
 import User from "../../../src/users/domain/model";
 import { UserId, Username, UserEmail } from "../../../src/users/domain/model";
+import * as UserError from "../../../src/users/domain/errors";
 
 describe("Jest should work", () => {
 	it("should work", () => {
@@ -29,21 +30,33 @@ describe("Users Model", () => {
 		});
 
 		it("Should throw an error if not valid uuid is passed", () => {
-			expect(() => User.createUser("1 2 3 4 5", exampleUsername, exampleEmail)).toThrow();
-			expect(() => User.createUser("abc123abc", exampleUsername, exampleEmail)).toThrow();
-			expect(() => User.createUser("12-123-123", exampleUsername, exampleEmail)).toThrow();
-			expect(() => User.createUser("1234", exampleUsername, exampleEmail)).toThrow();
-			expect(() =>
-				User.createUser(1 as unknown as string, exampleUsername, exampleEmail),
-			).toThrow();
+			expect(() => User.createUser("1 2 3 4 5", exampleUsername, exampleEmail)).toThrow(
+				UserError.InvalidUserIdError,
+			);
+
+			expect(() => User.createUser("abc123abc", exampleUsername, exampleEmail)).toThrow(
+				UserError.InvalidUserIdError,
+			);
+
+			expect(() => User.createUser("12-123-123", exampleUsername, exampleEmail)).toThrow(
+				UserError.InvalidUserIdError,
+			);
+
+			expect(() => User.createUser("1234", exampleUsername, exampleEmail)).toThrow(
+				UserError.InvalidUserIdError,
+			);
+
+			expect(() => User.createUser(1 as unknown as string, exampleUsername, exampleEmail)).toThrow(
+				UserError.InvalidUserIdError,
+			);
 
 			expect(() =>
 				User.createUser(true as unknown as string, exampleUsername, exampleEmail),
-			).toThrow();
+			).toThrow(UserError.InvalidUserIdError);
 
-			expect(() =>
-				User.createUser({} as unknown as string, exampleUsername, exampleEmail),
-			).toThrow();
+			expect(() => User.createUser({} as unknown as string, exampleUsername, exampleEmail)).toThrow(
+				UserError.InvalidUserIdError,
+			);
 		});
 
 		it("Should throw an error if not valid username", () => {
