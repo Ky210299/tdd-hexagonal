@@ -33,6 +33,48 @@ describe("User Services", () => {
 		expect(users.every((e) => e instanceof User)).toBeTruthy();
 	});
 
+	it("Should change the email and username of an user", async () => {
+		const user = new User(exampleUUID, exampleUsername, exampleEmail);
+		const newUserData = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
+		try {
+			await userService.saveUser(user);
+			await userService.changeUserData(user.getID().value, newUserData);
+			const changedUser = await userService.findUser(newUserData.getID().value);
+			expect(changedUser).toBeDefined();
+			if (!changedUser) throw 1;
+			expect(
+				changedUser.getEmail().value !== exampleEmail &&
+					changedUser.getEmail().value === "rob@mail.com",
+			).toBe(true);
+			expect(
+				changedUser.getName().value !== exampleUsername && changedUser.getName().value === "rob",
+			).toBe(true);
+		} catch (err) {
+			throw err;
+		}
+	});
+
+	it("Should delete an user", async () => {
+		const user = new User(exampleUUID, exampleUsername, exampleEmail);
+		try {
+			await userService.saveUser(user);
+			expect((await userService.findUser(user.getID().value)) instanceof User).toBe(true);
+			await userService.deleteUser(user.getID().value);
+			expect(await userService.findUser(user.getID().value)).toBeUndefined();
+		} catch (err) {
+			throw err;
+		}
+	});
+
+	it("Should throw an error if the user does not exist", async () => {
+		try {
+			await userService.deleteUser(exampleUUID);
+		} catch (err) {
+			console.log(err);
+			expect(err).toBe(1);
+		}
+	});
+
 	describe("Following feature", () => {
 		it("Should throw an error if try to follow it self", async () => {
 			try {
@@ -118,48 +160,6 @@ describe("User Services", () => {
 				expect(isFollowing).toBe(true);
 			} catch (err) {
 				throw err;
-			}
-		});
-
-		it("Should change the email and username of an user", async () => {
-			const user = new User(exampleUUID, exampleUsername, exampleEmail);
-			const newUserData = new User("123e4567-e89b-12d3-a456-426655440000", "rob", "rob@mail.com");
-			try {
-				await userService.saveUser(user);
-				await userService.changeUserData(user.getID().value, newUserData);
-				const changedUser = await userService.findUser(newUserData.getID().value);
-				expect(changedUser).toBeDefined();
-				if (!changedUser) throw 1;
-				expect(
-					changedUser.getEmail().value !== exampleEmail &&
-						changedUser.getEmail().value === "rob@mail.com",
-				).toBe(true);
-				expect(
-					changedUser.getName().value !== exampleUsername && changedUser.getName().value === "rob",
-				).toBe(true);
-			} catch (err) {
-				throw err;
-			}
-		});
-
-		it("Should delete an user", async () => {
-			const user = new User(exampleUUID, exampleUsername, exampleEmail);
-			try {
-				await userService.saveUser(user);
-				expect((await userService.findUser(user.getID().value)) instanceof User).toBe(true);
-				await userService.deleteUser(user.getID().value);
-				expect(await userService.findUser(user.getID().value)).toBeUndefined();
-			} catch (err) {
-				throw err;
-			}
-		});
-
-		it("Should throw an error if the user does not exist", async () => {
-			try {
-				await userService.deleteUser(exampleUUID);
-			} catch (err) {
-				console.log(err);
-				expect(err).toBe(1);
 			}
 		});
 	});
